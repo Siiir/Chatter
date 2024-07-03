@@ -6,7 +6,7 @@ fn main() -> anyhow::Result<()> {
     chat_client::init::all();
     let mut cli_args: chat_client::cli::Args = clap::Parser::parse();
     if cli_args.from_id.is_none() {
-        let int = match fs_err::read(chat_client::FILE_WITH_NEXT_MSG_ID) {
+        let int = match fs_err::read(chat_client::pa::FPATH_TO_FUTURE_MSG_ID) {
             Ok(read_bytes) => {
                 let mut arr = [0; 8];
                 for (idx, b) in read_bytes.into_iter().enumerate() {

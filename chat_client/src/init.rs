@@ -3,9 +3,7 @@ use tracing_subscriber::FmtSubscriber;
 
 pub fn all() {
     // Create a filter that sets the log level for actix to info and the rest to trace
-    let env_filter = tracing_subscriber::EnvFilter::new(
-        "hyper_util=warn,trace",
-    );
+    let env_filter = tracing_subscriber::EnvFilter::new("hyper_util=warn,trace");
 
     let subscriber = FmtSubscriber::builder()
         .with_env_filter(env_filter)

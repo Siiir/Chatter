@@ -3,16 +3,17 @@ use std::thread;
 
 pub use ui::cli;
 pub mod init;
+pub mod pa;
 pub mod req;
 pub mod ui;
 pub mod util;
 
-pub const FILE_WITH_NEXT_MSG_ID: &str = "./next_msg_id.bin";
+pub type MsgId = i64;
 
 pub fn start_msg_fetching_deamon(
     mut messages: Vec<model::ChatMsg>,
     client: reqwest::blocking::Client,
-) -> thread::JoinHandle<impl Send + 'static>{
+) -> thread::JoinHandle<impl Send + 'static> {
     use std::time::Duration;
 
     thread::spawn(move || {
@@ -22,7 +23,8 @@ pub fn start_msg_fetching_deamon(
 
             // Perform query
             messages.last().map(|msg| msg.id() + 1).map(|next_msg_id| {
-                fs_err::write(FILE_WITH_NEXT_MSG_ID, next_msg_id.to_le_bytes()).unwrap();
+                fs_err::write(crate::pa::FPATH_TO_FUTURE_MSG_ID, next_msg_id.to_le_bytes())
+                    .unwrap();
                 get_msgs_query.set_from_id(Some(next_msg_id));
             });
             match crate::req::get_msgs_with_ctx_err(&client, &get_msgs_query) {

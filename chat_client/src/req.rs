@@ -19,7 +19,7 @@ pub fn get_msgs_with_ctx_err(
         let mut resp =
             get_msgs(client, get_msgs_query).context("Failed to connect with the server.")?;
         if resp.status().is_success() {
-            match resp.json::<Vec::<crate::model::ChatMsg>>() {
+            match resp.json::<Vec<crate::model::ChatMsg>>() {
                 Ok(messages) => Ok(messages),
                 Err(err) => Err(anyhow!("Failed to deserialize server's response: {err}")),
             }

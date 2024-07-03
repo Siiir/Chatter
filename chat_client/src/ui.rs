@@ -10,10 +10,10 @@ pub mod cli {
             #[arg(short='a', long, default_value_t = IpAddr::from(Ipv4Addr::new(127, 0, 0, 1)))]
             pub ip_addr: IpAddr,
             /// Port of the targeted server.
-            #[arg(short='p', long, default_value_t = 8080)]
+            #[arg(short = 'p', long, default_value_t = 8080)]
             pub port: u16,
             /// User nickname for the chatting purposes.
-            #[arg(short='n', long, default_value = "anon")]
+            #[arg(short = 'n', long, default_value = "anon")]
             pub nickname: String,
 
             #[arg(short = 'i', long)]
