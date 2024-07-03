@@ -1,4 +1,6 @@
 pub mod model;
+use std::thread;
+
 pub use ui::cli;
 pub mod init;
 pub mod req;
@@ -10,8 +12,8 @@ pub const FILE_WITH_NEXT_MSG_ID: &str = "./next_msg_id.bin";
 pub fn start_msg_fetching_deamon(
     mut messages: Vec<model::ChatMsg>,
     client: reqwest::blocking::Client,
-) {
-    use std::{thread, time::Duration};
+) -> thread::JoinHandle<impl Send + 'static>{
+    use std::time::Duration;
 
     thread::spawn(move || {
         let mut get_msgs_query = model::GetMsgs::default();
@@ -38,5 +40,5 @@ pub fn start_msg_fetching_deamon(
                 std::thread::sleep(Duration::from_millis((1000 - elapsed_ms) as u64));
             }
         }
-    });
+    })
 }
