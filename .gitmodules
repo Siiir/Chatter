@@ -1,6 +1,0 @@
-[submodule "ChatServer"]
-	path = ChatServer
-	url = git@github.com:Siiir/java-ChatServer.git
-[submodule "chat_client"]
-	path = chat_client
-	url = git@github.com:Siiir/rust-chat_client.git
